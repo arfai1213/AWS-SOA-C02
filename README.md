@@ -11,6 +11,9 @@ My study guide to study AWS Certified SysOps Adminstrator - Associate
 ## Table of Content:
 1. <a href="#cloudwatch">CloudWatch</a>
 2. <a href="#ebs">EBS</a>
+3. <a href="#elb">ELB</a>
+4. <a href="#elasticache">Elasticache</a>
+5. <a href="#aws-organizations">AWS Organizations</a>
 
 
 
@@ -35,6 +38,12 @@ My study guide to study AWS Certified SysOps Adminstrator - Associate
 
 ### CloudWatch on-premise
 - download and install the SSM agent and CloudWatch agent. 
+
+### CloudWatch Custom Dashboard
+- can create CloudWatch metrics (even in different regions) into one place.
+
+### Billing Alarms
+- uses SNS topic to send out when the cost reach certain threshold. 
 
 ## EBS
 Volume Types:
@@ -79,3 +88,61 @@ EBS Volume statuses:
 
 Modifiying EBS Volumes:
 - can increase EBS size, volume type and adjust IOPS performance (for io1 volume) **without** deteching it.
+
+
+## ELB
+- consists of
+    - Application Load Balancer (Layer 7)
+    - Network Load Balancer (Layer 4, high network thoughtput)
+    - Classic Load Balancer
+
+### Monitor Load Balancers
+1. CloudWatch metrics
+    - auto pop-up CloudWatch metrics
+
+2. Access logs
+    - disabled by default
+    - capture detailed information about requests sent to load balancer.
+    - e.g. time of the request was received, client's IP address, latencies, request paths, and server responses.
+    - stores in Amazon S3 bucket
+    - **can store data where the EC2 instance has been deleted**
+
+3. Request tracing
+    - track HTTP requests from clients to targets or other services
+    -  `X-Amzn-Trace-Id` header being added or updated when the load balancer receives a request from client
+    - **for application load balancer only**
+
+4. CloudTrail logs
+    - CloudTrail monitors API calls in the AWS platform.
+    - for audit purpose
+
+## Elasticache
+### Monitoring elasticache
+1. CPU Utilization
+- (Memcached) add more nodes if exceeds 90% CPU utilization
+- (Redis) threshold to deletemine scaling: 90 / # of cores
+2. Swap Usage
+- Memcached
+    - should be around 0 most of the time and should not exceed 50Mb.
+    - if swap usage exceeds 50MB, increase the `memcached_connections_overhead` parameters (defines the amount of memory to be reserved for memcached connections and other misc overhead)
+- Redis
+    - no swap usage metric, use reserved-memory instead
+3. Evictions
+- Memcached
+    - either scale up (increase the memory of existing nodes) / scale out (add more nodes)
+- Redis
+    - Scale out (add read replicas)
+4. Concurrent Connections
+
+
+## AWS Organizations
+- manage multiple AWS accounts at once. 
+- allows centrally manage policies across multiple AWS accounts
+- allows control access to AWS services
+- allows automate AWS account creation and management
+- allows consolidate billing across multiple AWS accounts
+    - take advantages of pricing benefits from aggregated usage, e.g. volume discounts for EC2 and S3. 
+
+### Service Control Policies
+- control AWS service use across multiple AWS accounts.
+- specify Allow/Deny individual AWS services
