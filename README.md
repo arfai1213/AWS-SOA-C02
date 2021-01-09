@@ -23,7 +23,10 @@ My study guide to study AWS Certified SysOps Adminstrator - Associate
 12. <a href="#cloudfront">CloudFront</a>
 13. <a href="#s3">S3</a>
 14. <a href="#kms">kms</a>
-14. <a href="#cloudhsm">CloudHSM</a>
+15. <a href="#cloudhsm">CloudHSM</a>
+16. <a href="#snowball">Snowball</a>
+17. <a href="#storage-gateway">Storage Gateway</a>
+18. <a href="#efs">EFS</a>
 
 
 
@@ -547,3 +550,83 @@ steps:
     - includes tamper-evident physical security mechanisms
 - suitable for applications which have a regulatory requirement for dedicated hardware managing cryptographic keys
 - symmetric / asymetric encryption
+
+## Snowball
+- physical device used for transporting **many terbytes or petabytes** of data into and out of AWS
+- makes large scale data transfers fast, easy and secure
+- Tamper-resistant enclosure
+- 256-bit encryption
+- Region specific, not for transporting data from one region to another
+- Good for:
+    - dont want to make expensive upgrades to the network for a one-off data transfer
+    - high-bandwidth internet is not available or is cost-prohibitive
+    - takes more than a week to upload data
+
+### Snowball Edge
+- a 100TB device, which also features onboard compute power which can be clustered to act as a single storage and compute pool
+- designed to undertake local processing / edge computing and data transfer
+- S3-compatible endpoint, supports EFS, and run lambda functions as data is copied to the device
+- S3 buckets and lambda functions come pre-configured on the device
+
+### Snowball VS Snowball Edge
+- Snowball is just a data transport solution
+- Snowball Edge adds additional capability to run simple computing functions on the device
+- Use Snowball Edge for use cases that require local processing before returing the data to AWS
+- e.g. performing data analysis before writing the processed data to an S3 bucket on the Snowball Edge
+
+## Storage Gateway
+- consists of an on-premises software appliance which connects with AWS cloud-based storage to provide a seamless and secure integration between on-premises IT environment and AWS
+
+- Storage Gateway Virtual Appliance is installed in data center
+- Supports VMWare ESXi or Mircosoft Hyper-V
+- On-premises systems seamlessly integratewith AWS storage
+
+Types of Storage Gateway:
+- File Gateway - NFS (Linux) / SMB (window)
+- Volume Gateway (iSCSI)
+    - Stored Volumes
+    - Cached Volume
+    - Tape Gateway (VTL)
+
+### File Gateway
+- files stored as objects in **S3 buckets**
+- **accessed using NFS or SMB mount point**
+- with benefits of S3: bucket policies, S3 versioning, lifecycle management, replication etc..
+- low-cost alternative to on-premises storage
+
+<img src="./images/file-gateway.png"/>
+
+### Volume Gateway
+- provides cloud backend storage which is accessed using iSCSI protocol
+- 2 Types:
+    - Stored Volumes: store your all data locally and only backup to AWS
+        - low latency access to the entire dataset
+        - need own storage infrastructure as all data is stored locally in data center
+        <img src="./images/stored-volume.png"/>
+    - Cached Volumes: use S3 as primary storage and cache frequently accessed data in your Storage Gateway
+        - durable off-set async backups in form of EBS snapshots which are stored in S3
+        - only need enough local storage capacity to store the frequently accessed data
+        - still get low-latency access to frequently used data without a large investment in on-premises storage
+        <img src="./images/cached-volume.png"/>
+
+### Tape Gateway
+- virtual tape library which provides cost effective data archiving in the clouid using Glacier
+- DONT need to invest own tape backup infrastructure
+- integrates with existing tape backup infrastructure - NetBackup, Backup Exec, Veeam etc... which connect to the VTL using iSCSI
+- Data is stored on virtual tapes which are stored in Glacier and accessed using the VTL
+ <img src="./images/tape-gateway.png"/>
+
+## Athena
+- interactive query service that enables to analyse and query data located in S3 using SQL
+- serverless, pay per query / per TB scanned
+- Use cases: query log files stored in S3, e.g. ELB logs, S3 access logs
+
+
+## EFS
+- enables cross AZ, region, VPCs, on-premises
+- managed Network File System, highly available and scalable
+- Standard NFS protocol used by Linux Systems
+- allows multiple EC2 instances access the file system at once
+- lifecycle management capability
+- supports encryption at rest / in transit
+- Encryption at rest can **ONLY** be enabled at file system creation
