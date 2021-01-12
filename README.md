@@ -282,6 +282,21 @@ for moving between regions:
 - reduces the risk of simultaneous failures when instances share the same racks
 - guarantees your instances are placed in different racks with isolated power and networking
 
+### EC2 Dedicated Instances
+- Amazon EC2 instances that run in a VPC on hardware that's dedicated to a single customer
+- physically isolated at the host hardware level from instances that belong to other AWS accounts
+- **may share hardware with other instances from the same AWS account that are not dedicated instances**
+- pay for dedicated instances on-demand
+- save up to 70% by purchasing reserved instances
+- save up to 90% by purchasing spot instances
+- cost charged by instance
+
+## EC2 Dedicated Hosts
+- physical servers that are dedicated for your use
+- gives additional visiility and control over how instances are placed on a physical server, and can consistently deploy instances to the same physical server over time.
+- enable to use existing server-bound software licenses and address corporate compliance and regulatory requirements
+- cost charged by host
+
 ### AMI
 - provides all the information needed to launch an EC2 instance
     - template for root volume, e.g. OS, Applications
@@ -630,3 +645,75 @@ Types of Storage Gateway:
 - lifecycle management capability
 - supports encryption at rest / in transit
 - Encryption at rest can **ONLY** be enabled at file system creation
+
+
+## DDoS
+To mitigate DDoS
+- minimize the attack surface area
+- be ready to scale to absort the attack
+- safeguard exposed resources
+- learn normal behavior
+- create a plan for attacks
+
+## AWS Shield
+- free server that protects all AWS customers on ELB, CloudFront and Route53
+- protects against SYN/UDP Floods, Reflection attacks, and other layer3/layer 4 attacks
+- Advanced provides enhanced protections for applications running on ELB, CloudFront and Route53 against larger and more sophisticated attack. $3000 per month
+- AWS Shield Advanced provides
+    - always-on, flow-based monitoring of network traffic and active application monitoring to provide near real-time notifcation of DDoS attacks
+    - DDoS Response Team (DRT) 24X7 to manage and mitigate application layer DDoS attacks
+    - Protects AWS bill against higher fees due to ELB, CloudFront and Route53 usage spikes during DDoS attack
+
+## STS
+- grants users limited and temp. access to AWS resources. Users can come from 3 sources:
+    - Federation (typically Active Directory)
+        - Uses Security Assertion Markup Lanage (SAML)
+        - grants temporary access based off users Active Directory credentials (Does not need to be a user in IAM)
+        - Single sign on allows users to log in to AWS console without assigning IAM credentials
+    - Federation with Mobile Apps
+        - Use Facebook/Amazon/ Google or other OpenID providers to log in
+    - Cross Account Access
+        - users from one AWS account to access resources in another
+
+Key Terms:
+- Federation: combning or joining a list of users in one domain with a list of users in another domain (such as Active Directory)
+- Identity Broker: a service that allows you to take an identity from point A and join it (federate it) to point B
+- Identity Store: services like Active Directory, Facebook, Google etc
+- Identities - a users of a service like Facebook
+
+Example:
+
+<img src="./images/sts-ldap.png"/>
+
+Steps:
+1. Employee enters username and password
+2. The application calls an identity broker which captures the username and password
+3. The identity broker users the organization's LDAP directory to validate the employee's identity
+4. The identity broker calls the new `GetFederationToken` function using IAM credentials. The call must include an IAM policy and a duration (1-36 hours), along with a policy that specifies the permissions to be granted to the temporary security credentials
+5. The STS confirms that the policy of the IAM user making the call to `GetFederationToken` gives perimssion to create new tokens and then returns four values to the application:
+    - access key
+    - secret access key
+    - token
+    - duration
+6. The identity broker returns the temporary security credentials to the reporting application
+7. The data storage application users the temporary security credentials (including the token) to make request to Amazon S3
+8. Amazon S3 uses IAM to verify that the credentials allow the requested operation on the given S3 bucket and key
+9. IAM provides S3 with the go-ahead to perform the requested operation
+
+## WAF
+- web application firewall that lets you monitor the HTTP and HTTPS request that are forwarded to CloudFront or Application Load Balancer or to API Gateway. AWS WAF also lets you control access to your content
+- e.g. configure condition like what IP addresses are allowed to make this request or what query string parameters need to be passed for the request to be allowed, and then the ALB/CloudFront will either allow this content to be received or to give HTTP 403 Status Code
+- allows 3 different behaviours:
+    - Allow all request except the ones that you specify
+    - Block all request except the ones that you specify
+    - Count the requests that match the properties that you specify
+- attributes that can be used to define conditions:
+    - IP addresses
+    - Country originate from
+    - Values in request header
+    - Strings that appear in requests, either specific strings or string that match regex patterns
+    - Length of requests
+    - Presence of SQL injection
+    - Presence of a script that is likely to be malicious (aka cross-site scripting)
+- integrates with ALB/Cloudfront/API Gateway
+- **DOES NOT** integrate with classic load balancer/network load balancer
