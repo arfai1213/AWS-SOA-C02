@@ -27,8 +27,13 @@ My study guide to study AWS Certified SysOps Adminstrator - Associate
 16. <a href="#snowball">Snowball</a>
 17. <a href="#storage-gateway">Storage Gateway</a>
 18. <a href="#efs">EFS</a>
-
-
+19. <a href="#aws-shield">AWS Shield</a>
+20. <a href="#sts">STS</a>
+21. <a href="#waf">WAF</a>
+22. <a href="#aws-inspector">AWS Inspector</a>
+23. <a href="#efs">AWS Trusted Advisor</a>
+24. <a href="#shared-responsibility-model">Shared Responsibility Model</a>
+25. <a href="#aws-artifact">AWS Artifact</a>
 
 ## CloudWatch
 - Monitoring service to monitor AWS resources.
@@ -548,12 +553,28 @@ steps:
         1. `x-amz-server-side-encryption`: `AES256` (SSE-S3)
         1. `x-amz-server-side-encryption`: `ams:kms` (SSE-KMS)
 
+### Pre-signed URLs
+- `aws s3 presign s3://bucket/key --expires-in 3600` (default 60 mintes)
+
 ## KMS
 - shared hardware, multi-tenant managed service
 - allow to generate, store and manage your encryption keys
 - suitable for applications for which multi-tenancy is not an issue
 - encrypt data stored in AWS
 - uses symmetric keys
+
+### KMS vs CloudHSM
+
+|  | KMS | CloudHSM |
+| - | --- | -------- |
+| Tenancy | Multi | Single |
+| Scale & HA | HA Service from AWS | HA Service from AWS |
+| Key control | You + AWS | You |
+| Integration | Broad AWS support | Broad AWS support
+| Supported encryption | Symmetric | Symmetric and asymmetric
+| Compliance | good | FIPS 140-2 & EAL-4 |
+| Price | $ | $$ | 
+
 
 ## CloudHSM
 - HSMs (Hardware Security Modules) are used to protect the confidentiality of your keys
@@ -717,3 +738,39 @@ Steps:
     - Presence of a script that is likely to be malicious (aka cross-site scripting)
 - integrates with ALB/Cloudfront/API Gateway
 - **DOES NOT** integrate with classic load balancer/network load balancer
+
+## AWS Inspector
+- an automated security assessment service that helps improve the security and compliance of applications deployed on AWS.
+- automatically assesses applications for vulnerabilities or deviations from best practices.
+- produces a detailed list of security findings prioritized by level of severity after performing an assessment
+- How does it work?
+    - Create `Assessment target`
+    - Install agents on EC2 instances
+    - Create `Assessment template`
+    - Perform `Assessment run`
+    - Review `Findings` against `Rules`
+
+## AWS Trusted Advisor
+- an online resource to help you reduce cost, increase performance and improve security by optimizing your AWS environment.
+- will advise you on Cost Optimization, Performance, Security, Fault Tolerance
+- Core Checks And Recommendations
+- Full Trusted Advisor - Business and Enterprise Companies Only
+- Service Limit check (in performance category) displays your usage and limits for some aspects of some services
+
+## Shared Responsibility Model
+
+### AWS Security Responsibilities
+- Global infrastructure
+- hardware, software, networking and facilities 
+- "managed services"
+
+### Customer Security Responsibilities
+- Infrastructure as a Service (IaaS)
+- including updates and security patches
+- configuration of the AWS provided firewall
+
+<img src="./images/shared-responsibility-model.jpg"/>
+
+## AWS Artifact
+- provides on-demand downloads of AWS security and compliance documents, such as AWS ISO certifications, Payment Card Industry (PCI), and Service Organization Control (SOC) reports.
+- you can submit the security and compliance documents (aka audit artifacts) to your auditors or regulators to demonstrate the security and compliance of the AWS infrastructure and services that you use
