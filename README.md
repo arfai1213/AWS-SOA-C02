@@ -34,6 +34,7 @@ My study guide to study AWS Certified SysOps Adminstrator - Associate
 23. <a href="#efs">AWS Trusted Advisor</a>
 24. <a href="#shared-responsibility-model">Shared Responsibility Model</a>
 25. <a href="#aws-artifact">AWS Artifact</a>
+26. <a href="#route53">Route53</a>
 
 ## CloudWatch
 - Monitoring service to monitor AWS resources.
@@ -774,3 +775,17 @@ Steps:
 ## AWS Artifact
 - provides on-demand downloads of AWS security and compliance documents, such as AWS ISO certifications, Payment Card Industry (PCI), and Service Organization Control (SOC) reports.
 - you can submit the security and compliance documents (aka audit artifacts) to your auditors or regulators to demonstrate the security and compliance of the AWS infrastructure and services that you use
+
+## Route53
+- Simple Routing
+    - 1 record with multiple IP addresses in random order
+- Weighted Routing
+    - split traffic based on weights assigned
+    - e.g. 80% and 20% send to different IP addresses
+- Latency-based Routing
+    - route traffic based on the lowest network latency for your end user
+- Failover Routing
+    - active/passive set up (route to passive when active is down)
+- Geolocation Routing
+    - choose where your traffic will be sent based on the geographic location of your users
+- Multivalue Answer Routing
