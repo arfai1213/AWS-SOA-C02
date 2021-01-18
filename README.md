@@ -39,6 +39,7 @@ My study guide to study AWS Certified SysOps Adminstrator - Associate
 28. <a href="#cloudformation">CloudFormation</a>
 29. <a href="#elasticbeanstalk">ElasticBeanstalk</a>
 30. <a href="aws-opsworks">AWS OpsWorks</a>
+31. <a href="service-catalog">Service Catalog</a>
 
 ## CloudWatch
 - Monitoring service to monitor AWS resources.
@@ -469,6 +470,15 @@ steps:
 - Web Distribution - used for websites
 - RTMP - used for Media Streaming
 
+### Error Messages
+- 400 - Bad request
+- 403 - Access denied (files must be publicly accessible)
+- 404 - File Not Found
+
+- 502 - Bad Gateway: CloudFront cannot connect to origin
+- 503 - Service unavailable: Performance issues on origin server
+- 504 - Gateway timeout: Request expired before a response was received from the origin server
+
 ### Cache Hit Ratios
 - the ratio of request served from edge locations
 - more request from edge location, the better the performance
@@ -811,6 +821,7 @@ Steps:
 - instances behave like they are in the same network
 - can peer with other AWS account's VPC
 - star configuration: i.e. 1 central VPC peers with 4 others. **NO TRANSITIVE PEERING**
+- can be cross regions
 
 ### Subnet
 - can only have 1 network ACL
@@ -891,3 +902,21 @@ Steps:
 - enables configuration management for your OS and applications
 - allow to automate server config using code
 - works with existing Chef and Puppet code
+
+## Service Catalog
+- Catalog - portfolio of products. available as a portal CloudFormation templates
+- Access Control - with users, groups and roles get access to a portfolio of products
+- Enforce Standards - Approved resources only. Compliance with internal policies. Allowed Services. Configuration
+
+- Portfolio
+    - collection or grouping of products 
+    - Selectively grant access
+    - IAM users, groups, roles
+    - Browse and launch product
+    - Regional
+    - can share with other AWS account
+- Product
+    - Service or application
+    - EC2, EBS volume, DB
+    - Multi-tier web application
+    - Defined by a CloudFormation template
