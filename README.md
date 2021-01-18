@@ -881,6 +881,19 @@ Steps:
     - `Transform` - include snippets of code outside the main template
     - `Resources` - [Mandatory] the AWS resources that you are deploying
     - `Outputs` - user-defined the output values
+- Best Practices
+    1. IAM - Control access to CloudFormation using IAM
+    1. Be Aware of Server Limits - If you hit a limit then CloudFormation will fail to create stack
+    1. Avoid Manual Updates - Manual changes create a mis-match between your stack template and the current state of the stack
+    1. Use CloudTrail - Log calls to CloudFormation using CloudTrail so that it will log a trail of all changes and who made them
+    1. Stack Policy - Specify a stack policy whenever creating a stack that has critical resources
+        - stack policy is a JSON document that describes what update actions can be performed on designated resources
+        - helps protect critical stack resources from unintentional updates and mistakes caused by human error
+
+### CloudFormation Rollback
+- `UPDATE_ROLLBACK_FAILED` - CloudFormation cannot rollback all changes during an update
+- You Can No Longer Update - You can't update a stack which is in `UPDATE_ROLLBACK_FAILED` state
+- Fix The Error - Usually you need to fix the error causing the failure before you can continue to rollback
 
 ## ElasticBeanstalk
 - service for deploying and scaling web applications developed in popular languages:
