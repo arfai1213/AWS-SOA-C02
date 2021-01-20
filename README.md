@@ -119,6 +119,11 @@ Domain 6: Cost and Performance Optimization
     - Enable enhanced EC2 capabilities (for example, enhanced network adapter, instance store,
     placement groups)
 
+## White Papers:
+- <a href="https://d1.awsstatic.com/whitepapers/aws-security-whitepaper.pdf">Amazon Web Services: Overview of Security Processes</a> 
+- <a href="https://d1.awsstatic.com/whitepapers/architecture/AWS_Well-Architected_Framework.pdf">AWS Well-Architected Framework</a>
+- <a href="https://d1.awsstatic.com/whitepapers/aws-amazon-vpc-connectivity-options.pdf">Amazon Virtual Private Cloud Connectivity Options</a>
+- <a href="https://d1.awsstatic.com/whitepapers/aws_pricing_overview.pdf">How AWS Pricing Works</a>
 
 ## Table of Content:
 1. <a href="#cloudwatch">CloudWatch</a>
