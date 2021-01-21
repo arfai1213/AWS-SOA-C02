@@ -1,5 +1,5 @@
-# AWS-SOA-C01 - AWS Certified SysOps Administrator - Associate
-My study guide to study AWS Certified SysOps Adminstrator - Associate
+# AWS-SOA-C02 - AWS Certified SysOps Administrator - Associate
+My study guide to study AWS Certified SysOps Adminstrator Associate Beta at early 2021
 
 
 ## Useful Links:
