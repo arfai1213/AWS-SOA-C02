@@ -141,7 +141,7 @@ Domain 6: Cost and Performance Optimization
 11. <a href="#aurora">Aurora</a>
 12. <a href="#cloudfront">CloudFront</a>
 13. <a href="#s3">S3</a>
-14. <a href="#kms">kms</a>
+14. <a href="#kms">KMS</a>
 15. <a href="#cloudhsm">CloudHSM</a>
 16. <a href="#snowball">Snowball</a>
 17. <a href="#storage-gateway">Storage Gateway</a>
@@ -323,12 +323,12 @@ for moving between regions:
 - improves application performance by storing critical pieces of data in memory for low-latency access
 
 ### Memcached
-    - does not support multi-AZ
+- does not support multi-AZ
 
 ### Redis
-    - support multi-AZ
-    - in memory key-value store supports data strutures such as sorted sets and lists
-    - supports master/slave replication
+- support multi-AZ
+- in memory key-value store supports data strutures such as sorted sets and lists
+- supports master/slave replication
 
 ### Monitoring elasticache
 1. CPU Utilization
