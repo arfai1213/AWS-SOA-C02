@@ -129,36 +129,38 @@ Domain 6: Cost and Performance Optimization
 
 ## Table of Content:
 1. <a href="#cloudwatch">CloudWatch</a>
-2. <a href="#ebs">EBS</a>
-3. <a href="#elb">ELB</a>
-4. <a href="#elasticache">Elasticache</a>
-5. <a href="#aws-organizations">AWS Organizations</a>
-6. <a href="#ec2">EC2</a>
-7. <a href="#aws-config">AWS Config</a>
-8. <a href="#bastion-host">Bastion Host</a>
-9. <a href="#systems-manager">Systems Manager</a>
-10. <a href="#rds">RDS</a>
-11. <a href="#aurora">Aurora</a>
-12. <a href="#cloudfront">CloudFront</a>
-13. <a href="#s3">S3</a>
-14. <a href="#kms">KMS</a>
-15. <a href="#cloudhsm">CloudHSM</a>
-16. <a href="#snowball">Snowball</a>
-17. <a href="#storage-gateway">Storage Gateway</a>
-18. <a href="#efs">EFS</a>
-19. <a href="#aws-shield">AWS Shield</a>
-20. <a href="#sts">STS</a>
-21. <a href="#waf">WAF</a>
-22. <a href="#aws-inspector">AWS Inspector</a>
-23. <a href="#efs">AWS Trusted Advisor</a>
-24. <a href="#shared-responsibility-model">Shared Responsibility Model</a>
-25. <a href="#aws-artifact">AWS Artifact</a>
-26. <a href="#route53">Route53</a>
-27. <a href="#vpc">VPC</a>
-28. <a href="#cloudformation">CloudFormation</a>
-29. <a href="#elasticbeanstalk">ElasticBeanstalk</a>
-30. <a href="aws-opsworks">AWS OpsWorks</a>
-31. <a href="service-catalog">Service Catalog</a>
+1. <a href="#ebs">EBS</a>
+1. <a href="#elb">ELB</a>
+1. <a href="#elasticache">Elasticache</a>
+1. <a href="#aws-organizations">AWS Organizations</a>
+1. <a href="#ec2">EC2</a>
+1. <a href="#aws-config">AWS Config</a>
+1. <a href="#bastion-host">Bastion Host</a>
+1. <a href="#systems-manager">Systems Manager</a>
+1. <a href="#rds">RDS</a>
+1. <a href="#aurora">Aurora</a>
+1. <a href="#cloudfront">CloudFront</a>
+1. <a href="#s3">S3</a>
+1. <a href="#kms">KMS</a>
+1. <a href="#cloudhsm">CloudHSM</a>
+1. <a href="#snowball">Snowball</a>
+1. <a href="#storage-gateway">Storage Gateway</a>
+1. <a href="#efs">EFS</a>
+1. <a href="#aws-shield">AWS Shield</a>
+1. <a href="#sts">STS</a>
+1. <a href="#waf">WAF</a>
+1. <a href="#aws-inspector">AWS Inspector</a>
+1. <a href="#efs">AWS Trusted Advisor</a>
+1. <a href="#shared-responsibility-model">Shared Responsibility Model</a>
+1. <a href="#aws-artifact">AWS Artifact</a>
+1. <a href="#route53">Route53</a>
+1. <a href="#vpc">VPC</a>
+1. <a href="#cloudformation">CloudFormation</a>
+1. <a href="#elasticbeanstalk">ElasticBeanstalk</a>
+1. <a href="#aws-opsworks">AWS OpsWorks</a>
+1. <a href="#service-catalog">Service Catalog</a>
+1. <a href="#aws-account-billing">AWS Account billing</a>
+1. <a href="#amazon-quicksight">Amazon Quicksight</a>
 
 ## CloudWatch
 - Monitoring service to monitor AWS resources.
@@ -466,6 +468,12 @@ infomation that we can see:
         - Configuration snapshot delivery (filterable)
     - Managed Rules
         - basic
+- e.g.:
+    - ensure SSH is always disabled on instances:
+        - setup AWS Config Rules to ensure EC2 instances launched in a particular VPC are properly tagged
+        - make sure that every instance is associated with at least one security group
+        - check to make sure that port 22 is not open is any production security group
+
 
 ### Configuration **Items**
 - Point-in-time attributes of resource
@@ -485,6 +493,10 @@ infomation that we can see:
     - logs config for account in region
     - stores in S3
     - Notify via SNS
+- When a Configuration Recorder is stopped or deleted, the configuration change trigger does not run while periodic triggers continue to run at a specified period
+
+### Multi-account multi-region data aggregation
+- use AWS Config aggregator to collect data from all account in various regions. Accounts which are not part of AWS Organisation need to be individually added so that Aggregator can be authorised to collect data from these accounts
 
 ## Bastion Host
 - a host located in public subnet
@@ -497,6 +509,14 @@ infomation that we can see:
 - integrates with CloudWatch allowing to view your dashboards, view operational data and detect problems
 - includes *Run Command* which automates operational tasks across resources - e.g. security patching, package installs
 - organize your inventory, grouping resources together by application or environment - including on-premises systems.
+
+To run in hybrid environment, action required:
+1. complete general Systems Manager setup steps
+1. Create an IAM Service Role for a Hybrid Environment
+1. Install a TLS certificate on On-Premises servers and VMs
+1. Create a Managed-Instance Activation for a hybrid environment
+1. Install SSM Agent for a hybrid environment (Window & Linux)
+1. (optional) enable the advanced-instances tier for more than 1000 servers per account per region
 
 ### Run Command
 - allow you to run pre-defined commands on 1 or more EC2 instances
@@ -632,6 +652,16 @@ steps:
     - very cheap, used for archival only
     - takes 3-5 hours to restore
     - **NO REAL TIME ACCESS**
+    - To initiate an archive retrieval job, archive ID is required which can be found from vault inventory
+    - Retreval options:
+        - Expedited - quick retrieval of data, in 1-5 minutes
+        - Standard - Default retrieval option, in 3-5 hours
+        - Bulk - in 5-12 hours for a large amount of data & has lowest cost
+    - Vault lock policy
+        - lock vault for any future changes
+        - 2-step process:
+            - attack a vault lock policy to the vault & return a unique lock ID
+            - if a Complete Vault is not initiated within 24 hours, vault lock policy is removed
 
 ### S3 Intelligent Tiering
 - 2 tiers: Frequent and Infrequent access
@@ -800,6 +830,10 @@ Types of Storage Gateway:
 - lifecycle management capability
 - supports encryption at rest / in transit
 - Encryption at rest can **ONLY** be enabled at file system creation
+
+To mount EFS from another VPC:
+- **DNS resolution IS NOT supported**
+- an IP address needs to be used or a private hosted zone can be created in Route53
 
 
 ## DDoS
@@ -1052,3 +1086,17 @@ Steps:
     - EC2, EBS volume, DB
     - Multi-tier web application
     - Defined by a CloudFormation template
+
+## AWS account billing
+Cost & Usage Report:
+- customised reports
+- multiple files which consists of data files for usage, separate file for discounts if any & a manifest file listing data files in a report. 
+- Columns in Cost & Usage Reports can be added or removed based upon customer requirements
+
+## Amazon QuickSight
+- Standard Edition
+    - can invite an IAM user & allow them to user their credentials to access
+    - does not support encryption at rest
+- Enterprise Edition
+    - can select AD groups in directory services for access
+    - support encryption at rest
