@@ -390,6 +390,7 @@ for moving between regions:
 ### EC2 Launch Issues
 #### `InstanceLimitExceeded` error - reached the limitation of the number of instances you can launch in a region. (20 by default)
 #### `InsufficientInstanceCapacity` error - AWS does not currently have enough available on-demand capacity to serve your request
+### Instance Status check failed - try rebooting the instance
 
 ### Placement Groups
 - By default
@@ -441,6 +442,10 @@ for moving between regions:
         - copy the snapshot and re-encrypt using your own key
         - the sharing account must share with you the underlying snapshot and encryption key used to create the AMI
     - Limitation 2: You cannot directly copy an AMI with an associated `billingProducts` code (applies to Windows, RedHat and AMIs from AWS Marketplace.)
+
+### For Disaster recovery
+1. Make an AMI of the EC2 instance
+1. Copy the AMI to the destination region
 
 ## AWS Config
 - per region basis
