@@ -319,6 +319,7 @@ for moving between regions:
 4. CloudTrail logs
     - CloudTrail monitors API calls in the AWS platform.
     - for audit purpose
+    - can ensure files have not been tampered by enabling log file integrity (CloudTrail log file integrity validation)
 
 ## Elasticache
 - used to significantly improve latency and throughput for read-heavy application workloads
@@ -391,6 +392,7 @@ for moving between regions:
 #### `InstanceLimitExceeded` error - reached the limitation of the number of instances you can launch in a region. (20 by default)
 #### `InsufficientInstanceCapacity` error - AWS does not currently have enough available on-demand capacity to serve your request
 ### Instance Status check failed - try rebooting the instance
+### Lost of private key - detach the root volume from the instance and attach it to another instnace + modify the authorized_keys file on the volume
 
 ### Placement Groups
 - By default
@@ -427,7 +429,7 @@ for moving between regions:
 ## EC2 Dedicated Hosts
 - physical servers that are dedicated for your use
 - gives additional visiility and control over how instances are placed on a physical server, and can consistently deploy instances to the same physical server over time.
-- enable to use existing server-bound software licenses and address corporate compliance and regulatory requirements
+- **enable to use existing server-bound software licenses and address corporate compliance and regulatory requirements**
 - cost charged by host
 
 ### AMI
@@ -825,7 +827,7 @@ Types of Storage Gateway:
 - interactive query service that enables to analyse and query data located in S3 using SQL
 - serverless, pay per query / per TB scanned
 - Use cases: query log files stored in S3, e.g. ELB logs, S3 access logs
-
+- specify S3 bucket: s3://bucketname/prefix/
 
 ## EFS
 - enables cross AZ, region, VPCs, on-premises
@@ -868,6 +870,7 @@ To mitigate DDoS
         - Use Facebook/Amazon/ Google or other OpenID providers to log in
     - Cross Account Access
         - users from one AWS account to access resources in another
+- `Role`, `RoleSessionName` and `Audience` are required attributes which needs to be present in SAML assertion send to AWS STS.
 
 Key Terms:
 - Federation: combning or joining a list of users in one domain with a list of users in another domain (such as Active Directory)
@@ -961,6 +964,11 @@ Steps:
 - Geolocation Routing
     - choose where your traffic will be sent based on the geographic location of your users
 - Multivalue Answer Routing
+
+### use on-premise DNS server for resolving DNS names
+- assign your own domain name to your instances and use up to four of your own DNS servers
+- to do that, you must specify a special set of DHCP options to use with the VPC
+- details: <a href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html">Link</a>
 
 ## VPC
 - logically isolated section of AWS cloud where you can launch AWS resourecs in a virtual network
