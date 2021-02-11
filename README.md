@@ -549,6 +549,11 @@ Supported versions:
 - MariaDB
 - Aurora
 
+### encryption in trasit
+- SSL certificates + TLS
+- Set parameter group for RDS instances (to force connections to DB instance to use SSL)
+    - `rds.force_ssl` parameters
+
 ### Multi-AZ 
 - for for disaster recovery
 - high availability
@@ -704,6 +709,8 @@ steps:
 - enforce 2 things:
     - need a valid code from MFA device in order to permanently delete an object version
     - MFA also needed to suspend / reactivate versioning on an S3 bucket
+- **only works for CLI or API interaction, not in AWS management console**
+- **cannot make version DELETE actions with MFA using IAM user credentials. Must use root AWS account**
 
 ### S3 Encryption
 - In Transit: SSL/TLS
@@ -757,6 +764,15 @@ steps:
     - includes tamper-evident physical security mechanisms
 - suitable for applications which have a regulatory requirement for dedicated hardware managing cryptographic keys
 - symmetric / asymetric encryption
+- every AWS CloudHSM event in the audit log has fields:
+    - Time
+    - Reboot Counter
+    - Sequence No
+    - Command Type - represents the category of command
+    - Opcode - identify the management command that is being recorded
+    - Session Handle - mark the session in which command was executed
+    - Response - (success or error)
+    - Log Type
 
 ## Snowball
 - physical device used for transporting **many terbytes or petabytes** of data into and out of AWS
@@ -988,6 +1004,7 @@ Steps:
 - can peer with other AWS account's VPC
 - star configuration: i.e. 1 central VPC peers with 4 others. **NO TRANSITIVE PEERING**
 - can be cross regions
+- each VPC owner should manually add route pointing to CIDR of other VPC
 
 ### Subnet
 - can only have 1 network ACL
@@ -1033,6 +1050,11 @@ Steps:
     - traffic to and from 169.254.169.254 for instance metadata
     - DHCP traffic
     - traffic to the reserved IP address for the default VPC router
+
+### Troubleshooting
+1. instances are not receiving a public DNS hostname
+    - check `enableDnsHostNames` is set to No
+    - check `enableDnsSupport` is set to No 
 
 ## CloudFormation
 - allow to manage, configure and provision AWS infrastructure as code
