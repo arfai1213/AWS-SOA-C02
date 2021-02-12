@@ -161,6 +161,7 @@ Domain 6: Cost and Performance Optimization
 1. <a href="#service-catalog">Service Catalog</a>
 1. <a href="#aws-account-billing">AWS Account billing</a>
 1. <a href="#amazon-quicksight">Amazon Quicksight</a>
+1. <a href="#aws-privatelink">Amazon PrivateLink</a>
 
 ## CloudWatch
 - Monitoring service to monitor AWS resources.
@@ -1007,6 +1008,7 @@ Steps:
 - each VPC owner should manually add route pointing to CIDR of other VPC
 
 ### Subnet
+- must reside within a AZ
 - can only have 1 network ACL
 - some reserved IP addresses 
     - **first 4 IP addresses and last IP address in each subnet CIDR block are reserved**
@@ -1026,6 +1028,19 @@ Steps:
      - put in public subnet
      - and then add entry in `Routes` in Route Table
         - Destination: `0.0.0.0/0` and target as the NAT Gateway
+
+### access the internet without public IP addresses
+1. route traffic through a NAT gateway/ instance to access internet
+2. (with a hardware VPN connection / Direct Connect connection), instances can route Internet traffic down the virtual private gateway to existing datacenter
+
+### monitor the network traffic in VPC
+- Amazon VPC traffic mirroring and Amazon VPC flow logs
+
+### VPC Traffic Mirroring
+- replicate network traffic to and from an EC2 instance and forward it to out-of-band security and monitoring appliances for use uses.
+- deployed on EC2 instance / fleet of instances behind a Network Load Balancer with UDP listener
+- its copies network traffic from ENI of EC2 instances in VPC
+- privides deep insight into network traffic by allowing to analyze actual traffic content
 
 ### Network ACL
 - comes with default, defauly it allows all outbound and inbounrd
@@ -1135,3 +1150,10 @@ Cost & Usage Report:
 - Enterprise Edition
     - can select AD groups in directory services for access
     - support encryption at rest
+
+## AWS PrivateLink
+- enables customers to access services hosted on AWS in a highly available and scalable manner, while keeping all the network traffic within the AWS network.
+- use this to privately access services powered by PrivateLink from their VPC or on-premises, without using public IPs, and without requiring the traffic to traverse across the Internet
+- How to use
+    - create interface type VPC endpoints for services that are powered by PrivateLink
+    - once these endpoints are created, any traffic destined to these IPs will get privately routed to the corresponding AWS services.
