@@ -174,9 +174,11 @@ Domain 6: Cost and Performance Optimization
 - Store **as long as you want** (indefinitely)
 - Change the retention for each *Log Group*
 - able to retrieve data logs from terminated EC2/ELB instances
-- Metric Granularity: from 1 minute to 3/5 minutes
+- Metric Granularity: from 1 minute to 5 minutes
 - 1 minute for detailed monitoring. 5 minutes for standard monitoring.
 - *Minimum granularity* for custom metrics: 1 minutes
+- **StatsD** is the protocol for CloudWatch agents on Windows and Linux servers
+- **collectd** is the protocol for CloudWatch agents on Linux servers only
 
 ### CloudWatch Alarms
 - clarm to monitor any CloudWatch metric
@@ -187,6 +189,8 @@ Domain 6: Cost and Performance Optimization
 
 ### CloudWatch Custom Dashboard
 - can create CloudWatch metrics (even in different regions) into one place.
+- **Detailed Monitoring** needs to be enabled to have custom dashboard with metrics from different regions
+- permissions to call `PutMetricData` and `PutDashboard` to create customized dashboards 
 
 ### Billing Alarms
 - uses SNS topic to send out when the cost reach certain threshold. 
@@ -1119,6 +1123,8 @@ Steps:
     1. Stack Policy - Specify a stack policy whenever creating a stack that has critical resources
         - stack policy is a JSON document that describes what update actions can be performed on designated resources
         - helps protect critical stack resources from unintentional updates and mistakes caused by human error
+- DeletionPolicy
+    - Retain / Snapshot / Delete (default)
 
 ### CloudFormation Rollback
 - `UPDATE_ROLLBACK_FAILED` - CloudFormation cannot rollback all changes during an update
@@ -1147,6 +1153,7 @@ Steps:
 - works with existing Chef and Puppet code
 
 ## Service Catalog
+- allow to centrally manage commonly deployed IT services, and helps to achieve consistent governance and meet compliance requirements, while enalbing users to quickly deploy only approved IT services they need
 - Catalog - portfolio of products. available as a portal CloudFormation templates
 - Access Control - with users, groups and roles get access to a portfolio of products
 - Enforce Standards - Approved resources only. Compliance with internal policies. Allowed Services. Configuration
