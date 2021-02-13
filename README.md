@@ -982,10 +982,37 @@ Steps:
     - choose where your traffic will be sent based on the geographic location of your users
 - Multivalue Answer Routing
 
+### DNS record types
+- A (address record)
+- AAAA (IPv6 address record)
+- CNAME (canonical name record)
+- CAA (certification authority authorization)
+- MX (mail exchange record)
+- NAPTR (name authority pointer record)
+- NS (name server record)
+- PTR (pointer record)
+- SOA (start of authority record)
+- SPF (sender policy framework)
+- SRV (service locator)
+- TXT (text record)
+- alias records - route traffic to selected AWS resources
+
 ### use on-premise DNS server for resolving DNS names
 - assign your own domain name to your instances and use up to four of your own DNS servers
 - to do that, you must specify a special set of DHCP options to use with the VPC
 - details: <a href="https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html">Link</a>
+
+### Route 53 Traffic Flow
+- global traffic management service, improve the performance and availability of your application for end users by running multiple endpoints around the world
+- connect users to the best endpoint based on latency, geography and endpoint health
+- create policies that route traffic based on constraints, including latency, endpoint health, load, geoproximity and geography
+- Traffic policy
+    - set of rules defined to route end users' request to one of the application endpoints
+    - JSON-formatted text files
+- Policy record
+    - associates the traffic policy with the appropriate DNS name within an Amazon Route 53 hosted zone that you own
+- support all Route 53 routing policies + geoproximity based routing with traffic biasing
+
 
 ## VPC
 - logically isolated section of AWS cloud where you can launch AWS resourecs in a virtual network
