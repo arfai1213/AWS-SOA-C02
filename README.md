@@ -485,7 +485,19 @@ infomation that we can see:
         - setup AWS Config Rules to ensure EC2 instances launched in a particular VPC are properly tagged
         - make sure that every instance is associated with at least one security group
         - check to make sure that port 22 is not open is any production security group
-
+    - `rds-multi-az-support` to check whether high availability is enabled for RDS DB instance
+- Change-triggered rule
+    - is executed when AWS Config records a configuration change for any of the resource specified
+    - AWS Config run the evaluation when it detects a change to a resource that matches the rule
+    s scope.
+- Periodic rule
+    - is triggered at a specified frequency, e.g. 1hr, 3hr, 6hr, 12hr or 24hrs.
+- Custom rules
+    - is used for to evaluate additional resources that AWS Config doesn't record
+- Charging for:
+    1. number of configuration items recorded
+    1. number of active AWS Config rule evaluations
+    1. number of conformance pack evaluations 
 
 ### Configuration **Items**
 - Point-in-time attributes of resource
@@ -508,7 +520,8 @@ infomation that we can see:
 - When a Configuration Recorder is stopped or deleted, the configuration change trigger does not run while periodic triggers continue to run at a specified period
 
 ### Multi-account multi-region data aggregation
-- use AWS Config aggregator to collect data from all account in various regions. Accounts which are not part of AWS Organisation need to be individually added so that Aggregator can be authorised to collect data from these accounts
+- AWS Config Aggregated view displays the configuration data of AWS resources and provides an overviewof your rules and their compliance state and total resource count of AWS resources.
+- use **AWS Config aggregator** to collect data from all account in various regions. Accounts which are not part of AWS Organisation need to be individually added so that Aggregator can be authorised to collect data from these accounts
 
 ## Bastion Host
 - a host located in public subnet
@@ -706,7 +719,7 @@ steps:
 ### S3 Versioning
 - enables to revert to older version of S3 objects
 - multiple version of an object are stored in the same bucket
-- with versioning enabled, a **DELETE** action doesn't delete the object version, but applies a**delete marker** instead
+- with versioning enabled, a **DELETE** action doesn't delete the object version, but applies a **delete marker** instead
 - to permanently delete, provide the object Version ID in the delete request
 
 ### S3 MFA Delete
