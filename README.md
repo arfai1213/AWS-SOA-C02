@@ -554,7 +554,7 @@ Supported versions:
 - MariaDB
 - Aurora
 
-### encryption in trasit
+### encryption in transit
 - SSL certificates + TLS
 - Set parameter group for RDS instances (to force connections to DB instance to use SSL)
     - `rds.force_ssl` parameters
