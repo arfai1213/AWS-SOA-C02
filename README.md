@@ -183,6 +183,8 @@ Domain 6: Cost and Performance Optimization
 ### CloudWatch Alarms
 - clarm to monitor any CloudWatch metric
 - set approriate thresholds to trigger the alarms and related actions
+- To test CloudWatch Alarm:
+    - use `SetAlarmState` to set the state of an alarm for testing goals
 
 ### CloudWatch on-premise
 - download and install the SSM agent and CloudWatch agent. 
@@ -329,6 +331,8 @@ for moving between regions:
 ## Elasticache
 - used to significantly improve latency and throughput for read-heavy application workloads
 - improves application performance by storing critical pieces of data in memory for low-latency access
+- gets two metrics to measure the CPU utilization, `EngineCPUUtilization` and the `CPU utilization`
+
 
 ### Memcached
 - does not support multi-AZ
@@ -369,7 +373,18 @@ for moving between regions:
 - specify Allow/Deny individual AWS services
 
 ## EC2
-
+### EC2 Health checks
+- instance status monitoring
+- Type of status checks
+    - System status checks
+        - checks monitor the AWS systems on instance you runs
+        - detects underlying problems that require AWS involvement to repair
+        - e.g. loss of network connectivity, system power
+    - Instance status checks
+        - checks monitor the software and network configuration of individual instance
+        - check the health of the instance by sending an address resolution protocol (ARP) request to the network interface
+        - detects problems that require your involvement
+        - e.g. Failed system status checks, Incorrect networking or startup configuration
 ### EC2 Options
 #### On Demand
 - low cost + flexibility without any up-front payment / long-term payment
@@ -635,9 +650,10 @@ steps:
 - Edge Location - location where content will be cached
 - Origin - the origin of all the files that the CDN will distribute
 - Distribution - the name given the CDN which consists of a collection of Edge Locations
-
 - Web Distribution - used for websites
 - RTMP - used for Media Streaming
+
+- reports to help to know its activities (CloudFront popular objects report), gives the list of the most popular objects and statistics
 
 ### Error Messages
 - 400 - Bad request
@@ -1204,3 +1220,7 @@ Cost & Usage Report:
 - How to use
     - create interface type VPC endpoints for services that are powered by PrivateLink
     - once these endpoints are created, any traffic destined to these IPs will get privately routed to the corresponding AWS services.
+
+## CloudTrail
+- Trace API call to AWS resources for audit purpose
+- CloudTrail logs delivered to the S3 bucket are encrypted by server-side encryption by AWS using SSE-S3
