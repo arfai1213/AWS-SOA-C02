@@ -477,6 +477,33 @@ for moving between regions:
 - Resource tracking
 - provides configuration snapshots and logs config change of AWS resources
 - provides automated compliance checking
+- **can create own custom rules in AWS Lambda**
+
+Labs:
+### Setup AWS Config rule
+- Step 1:
+    - you can choose to what resources to record
+        - all resources supported in the region or include global resources
+        - record specific resource types
+    - Delivery method
+        - S3 buckets
+            - create a bucket / choose a bucket from you account / choose a bucket from another account
+        - SNS topic
+            - create a topic / choose a topic from your account / choose a topic from another account
+- Step 2:
+    - select AWS managed rules 
+        e.g. restricted-ssh
+
+### Setup aggregator
+- Step 1:
+    - Aggregator name
+    - select source accounts
+        - add individual account IDs / add my organization
+    - select regions
+
+## Remediation
+- Step 1:
+    - Automation remediation or Manual remediation (e.g create JIRA issue / SNS noti.)
 
 infomation that we can see:
 - Resource Type
