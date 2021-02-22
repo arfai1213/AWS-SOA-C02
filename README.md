@@ -367,6 +367,7 @@ for moving between regions:
 - allows automate AWS account creation and management
 - allows consolidate billing across multiple AWS accounts
     - take advantages of pricing benefits from aggregated usage, e.g. volume discounts for EC2 and S3. 
+- SCP for denying access to specific service for all root users in all accounts
 
 ### Service Control Policies
 - control AWS service use across multiple AWS accounts.
@@ -576,6 +577,7 @@ infomation that we can see:
 - integrates with CloudWatch allowing to view your dashboards, view operational data and detect problems
 - includes *Run Command* which automates operational tasks across resources - e.g. security patching, package installs
 - organize your inventory, grouping resources together by application or environment - including on-premises systems.
+- Good Example: <a href="https://www.youtube.com/watch?v=jihhLckop6A">Automated resilience testing with using Systems Manager</a>
 
 To run in hybrid environment, action required:
 1. complete general Systems Manager setup steps
@@ -601,7 +603,17 @@ To run in hybrid environment, action required:
 - manage hybrid enviroment
 - requires ssm-agent installed on-premise
 
+### Systems Manager Documents
+- can be used to create a set of actions to be executed from Manage Instance. 
+
 ## RDS
+- AWS responsible for
+    - point-in-time backup every 5 minutes
+    - critical security patches for the database
+    - patch management - flaws within the infrastructure 
+    - configuration management - the configuration of its infrastructure devices
+- YOU responsible for
+    - Configuration management - own guest operating systems, databases, and applications
 
 Supported versions:
 - MySQL
@@ -772,6 +784,7 @@ steps:
     - MFA also needed to suspend / reactivate versioning on an S3 bucket
 - **only works for CLI or API interaction, not in AWS management console**
 - **cannot make version DELETE actions with MFA using IAM user credentials. Must use root AWS account**
+- bucket policy condition key `aws:MultiFactorAuthPresent`
 
 ### S3 Encryption
 - In Transit: SSL/TLS
@@ -1094,6 +1107,11 @@ Steps:
 - can be cross regions
 - each VPC owner should manually add route pointing to CIDR of other VPC
 
+- Special case:
+    - VPC A connects to other VPCs (VPC B and VPC C) that having same CIDR block
+    - need to add more specific routing entry for instances in VPC B/ VPC C
+    - <a href="https://docs.aws.amazon.com/vpc/latest/peering/peering-configurations-partial-access.html">Link</a>
+
 ### Subnet
 - must reside within a AZ
 - can only have 1 network ACL
@@ -1166,6 +1184,7 @@ Steps:
     - `Description`
     - `Metadata`
     - `Parameters` - input custom values
+        - `NoEcho` - whether to mask the parameter value to prevent it from being displayed in the console
     - `Conditions` - e.g. provision resources based on environment
     - `Mapping` - own user-defined value, e.g. `ami`
     - `Transform` - include snippets of code outside the main template
@@ -1181,6 +1200,8 @@ Steps:
         - helps protect critical stack resources from unintentional updates and mistakes caused by human error
 - DeletionPolicy
     - Retain / Snapshot / Delete (default)
+- DependsOn
+    - specify the creation of a specific resource follows another
 
 ### CloudFormation Rollback
 - `UPDATE_ROLLBACK_FAILED` - CloudFormation cannot rollback all changes during an update
