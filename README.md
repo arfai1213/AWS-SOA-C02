@@ -162,6 +162,7 @@ Domain 6: Cost and Performance Optimization
 1. <a href="#aws-account-billing">AWS Account billing</a>
 1. <a href="#amazon-quicksight">Amazon Quicksight</a>
 1. <a href="#aws-privatelink">Amazon PrivateLink</a>
+1. <a href="#plan-for-disaster-recovery-dr">Plan for Disaster recovery (DR)</a>
 
 ## CloudWatch
 - Monitoring service to monitor AWS resources.
@@ -1198,7 +1199,7 @@ Steps:
     1. Stack Policy - Specify a stack policy whenever creating a stack that has critical resources
         - stack policy is a JSON document that describes what update actions can be performed on designated resources
         - helps protect critical stack resources from unintentional updates and mistakes caused by human error
-- DeletionPolicy
+- DeletionPolicy / UpdateReplacePolicy
     - Retain / Snapshot / Delete (default)
 - DependsOn
     - specify the creation of a specific resource follows another
@@ -1272,3 +1273,27 @@ Cost & Usage Report:
 ## CloudTrail
 - Trace API call to AWS resources for audit purpose
 - CloudTrail logs delivered to the S3 bucket are encrypted by server-side encryption by AWS using SSE-S3
+
+## Plan for Disaster recovery (DR)
+- Recovery Time Objective (RTO) - max. acceptable delay between the interruption of service and restoration of service
+- Recovery Point Objective (RPO) - max. acceptable amount of time since the last data recovery point
+
+Discovery strategies
+1. Backup & Restore (RPO in hours, RTO in 24 hours or less)
+    - using point-in-time backup
+    - restore when necessary
+2. Pilot Light (RPO in minutes, RTO in hours)
+    - replicate data from one region to another region + replicate core workload infrastructure
+    - have a standby application server (but switched off)
+3. Warm standby (RPO in seconds, RTO in minutes)
+    - scaled up to handle the load
+4. Multi-region (multi-site) active-active (RTO near zero, RTO potentially zero)
+    - synchronize data across Regions
+    - data replication 
+
+### Difference between Pilot Light and Warm Standby
+- both include an environment in your DR region with copies of your primary region assets
+- Pilot Light cannot process  requests without additional action taken fisrt
+    - require to turn on servers, possibly delay infrastructure and scale up
+- Warm Standby can handle traffic immediately
+    - requires to scale up (since everything is already deloyed and running)
