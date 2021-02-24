@@ -13,3 +13,6 @@ Records what to study in labs
         - format: `${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}`
 1. Load balancing
     - launch configurations, target groups, ASG
+1. AWS Organizations
+    - how to use SCP to control service access
+    - how the policy inheritance works
