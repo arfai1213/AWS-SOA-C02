@@ -163,6 +163,7 @@ Domain 6: Cost and Performance Optimization
 1. <a href="#amazon-quicksight">Amazon Quicksight</a>
 1. <a href="#aws-privatelink">Amazon PrivateLink</a>
 1. <a href="#plan-for-disaster-recovery-dr">Plan for Disaster recovery (DR)</a>
+1. <a href="#guardduty">Amazon GuardDuty</a>
 
 ## CloudWatch
 - Monitoring service to monitor AWS resources.
@@ -277,6 +278,9 @@ for moving between regions:
 - can create AMI's from both images and snapshots
 - can change EBS volume sizes on the fly, including chaning the size and storage type
 - Volumes will **ALWAYS** be in the same AZ as the EC2 instance
+- **Fast Snapshot Restore**
+    - speed up the process of creating volumes from snapshots
+    - must be enabled in each AZ that you intend to create
 
 ## ELB
 - consists of
@@ -1297,3 +1301,12 @@ Discovery strategies
     - require to turn on servers, possibly delay infrastructure and scale up
 - Warm Standby can handle traffic immediately
     - requires to scale up (since everything is already deloyed and running)
+
+## GuardDuty
+- threat detection service that continuously monitors for malicious activity and unauthorized behavior to protect AWS accounts, workloads, and data stored in Amazon S3.
+- uses ML, anomaly detection and integrated threat intelligence to identify and prioritize threats
+- analyzes events
+    - AWS CloudTrail event logs
+    - Amazon VPC Flow logs
+    - DNS logs
+- no software and hardware to deploy or maintain

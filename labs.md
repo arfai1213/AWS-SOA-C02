@@ -16,3 +16,11 @@ Records what to study in labs
 1. AWS Organizations
     - how to use SCP to control service access
     - how the policy inheritance works
+1. RDS  (from <a href="https://d1.awsstatic.com/training-and-certification/docs-sysops-associate/AWS-Certified-SysOps-Administrator-Associate_Sample-Questions_C02.pdf">Official Exam example</a>)
+    - with parameter group + KMS setup
+1. S3
+    - versioning
+    - encryption
+    - Lifecycle management
+    - inventory
+    - object lock
