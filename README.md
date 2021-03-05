@@ -183,7 +183,7 @@ Domain 6: Cost and Performance Optimization
 - **collectd** is the protocol for CloudWatch agents on Linux servers only
 
 ### CloudWatch Alarms
-- clarm to monitor any CloudWatch metric
+- to monitor any CloudWatch metric
 - set approriate thresholds to trigger the alarms and related actions
 - To test CloudWatch Alarm:
     - use `SetAlarmState` to set the state of an alarm for testing goals
@@ -224,7 +224,7 @@ Volume Types:
     - **Cannot be a boot volume**
 
 ### Monitoring EBS
-- Pre-Warming EBS Volumes: storage blocks on volumes were restored fomr snapshots must be initialized (pulled down from S3 and writter to the volume) before you can access the block. This preliminary action takes time and cause a significant increase in the latency of an I/O application the first time each block is accessed.
+- Pre-Warming EBS Volumes: storage blocks on volumes were restored from snapshots must be initialized (pulled down from S3 and written to the volume) before you can access the block. This preliminary action takes time and cause a significant increase in the latency of an I/O application the first time each block is accessed.
 - To avoid this issue: Initialization - reading from all of the blocks on your volume before using it. 
 
 EBS Volume metrics (<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using_cloudwatch_ebs.html">Link</a> for details):
@@ -532,12 +532,11 @@ infomation that we can see:
     - ensure SSH is always disabled on instances:
         - setup AWS Config Rules to ensure EC2 instances launched in a particular VPC are properly tagged
         - make sure that every instance is associated with at least one security group
-        - check to make sure that port 22 is not open is any production security group
+        - check to make sure that port 22 is not open in any production security group
     - `rds-multi-az-support` to check whether high availability is enabled for RDS DB instance
 - Change-triggered rule
     - is executed when AWS Config records a configuration change for any of the resource specified
-    - AWS Config run the evaluation when it detects a change to a resource that matches the rule
-    s scope.
+    - AWS Config run the evaluation when it detects a change to a resource that matches the rules scope.
 - Periodic rule
     - is triggered at a specified frequency, e.g. 1hr, 3hr, 6hr, 12hr or 24hrs.
 - Custom rules
@@ -632,7 +631,7 @@ Supported versions:
     - `rds.force_ssl` parameters
 
 ### Multi-AZ 
-- for for disaster recovery
+- for disaster recovery
 - high availability
 - backups/ restore's are taken from secondary which avoids I/O suspension to the primary
 - AWS handles the failover. Done by updating the private DNS for the database endpoint
@@ -756,7 +755,7 @@ steps:
 ### S3 Intelligent Tiering
 - 2 tiers: Frequent and Infrequent access
 - for unknown or unpredictable access patterns
-- auto. move your data to msot cost-effective tier based on how frequently you access each object
+- auto. move your data to most cost-effective tier based on how frequently you access each object
 - for cost optimization
 - no fees for accessing data but small monthly fee for monitoring / automation
 
