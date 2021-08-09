@@ -1,7 +1,11 @@
 # AWS-SOA-C02 - AWS Certified SysOps Administrator - Associate
 My study guide to study AWS Certified SysOps Adminstrator Associate Beta at early 2021
 
+## **Content has been moved to my personal 's <a href="https://www.notion.so/Everything-about-AWS-de0cab9a6a9f4c0b8bb1c410f76c8a56">notion</a>**
 
+My AWS Journey: <a href="https://www.credly.com/users/ming-fai-law/badges">credly</a>**
+
+<hr />
 ## Useful Links:
 <a href="https://d1.awsstatic.com/training-and-certification/docs-sysops-associate/AWS-Certified-SysOps-Administrator-Associate_Exam-Guide_C02.pdf">Offical Exam Guide</a>
 
